@@ -42,5 +42,4 @@ public class Doctor {
     public String toString(){
         return "Doctor{doctorid='"+doctorid+"', name="+name+", specialization='"+specialization+"', experienxeYears="+experienceYears+"}";
     }
-
 }
