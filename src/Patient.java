@@ -1,27 +1,46 @@
 public class Patient {
-    private String name;
-    private String surname;
-    private int IIN;
-    private String phonenumber;
-    public Patient(String name, String surname,int IIN, String phonenumber){
-        this.name=name;
-        this.surname=surname;
+    private String IIN;
+    private String fullname;
+    private int age;
+    private String bloodtype ;
+    public Patient(String IIN, String fullname,int age, String bloodtype){
         this.IIN=IIN;
-        this.phonenumber=phonenumber;
+        this.fullname=fullname;
+        this.age=age;
+        this.bloodtype=bloodtype;
     }
-    public String getName(){
-        return name;
-    }
-    public String getSurname(){
-        return surname;
-    }
-    public int getIIN(){
+    public String getIIN(){
         return IIN;
     }
-    public String getPhonenumber(){
-        return phonenumber;
+    public String getFullname(){
+        return fullname;
+    }
+    public int getAge(){
+        return age;
+    }
+    public String getBloodtype(){
+        return bloodtype;
+    }
+    public void setIIN(IIN){
+        this.IIN=IIN;
+    }
+    public void setFullname(fullname){
+        this.fullname=fullname;
+    }
+    public void setAge(age){
+        this.age=age;
+    }
+    public void setBloodtype(bloodtype){
+        this.bloodtype=bloodtype;
+    }
+    public boolean isMinor(){
+        return age<18;
+    }
+    public void getagecategory(double category){
+        return category=age/10;
     }
 
-
-
+    public String toString(){
+        return "Patient{IIN='"+IIN+"', fullname="+fullname+", age='"+age+"',bloodttype="+bloodtype+"}";
+    }
 }
