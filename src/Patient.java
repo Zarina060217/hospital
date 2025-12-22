@@ -21,6 +21,7 @@ public class Patient {
     public String getBloodtype(){
         return bloodtype;
     }
+
     public void setIIN(String IIN){
         this.IIN=IIN;
     }
@@ -33,6 +34,7 @@ public class Patient {
     public void setBloodtype(String bloodtype){
         this.bloodtype=bloodtype;
     }
+
     public boolean isMinor(){
         return age<18;
     }
