@@ -9,35 +9,33 @@ public class Doctor {
         this.specialization=specialization;
         this.experienceYears=experienceYears;
     }
-    public String getDoctorid(){
-        return doctorid;
-    }
-    public String getName(){
-        return name;
-    }
-    public String getSpecialization(){
-        return specialization;
-    }
-    public int getExpeienceYears(){
-        return experienceYears;
-    }
-    public void setDoctorid(doctorid){
+    public String getDoctorid(){return doctorid;}
+    public String getName(){return name;}
+    public String getSpecialization(){return specialization;}
+    public int getExpeienceYears(){return experienceYears;}
+
+    public void setDoctorid(String doctorid){
         this.doctorid=doctorid;
     }
-    public void setName(name){
+    public void setName(String name){
         this.name=name;
     }
-    public void setSpecialization(specialization){
+    public void setSpecialization(String specialization){
         this.specialization=specialization;
     }
-    public void setExperienceYears(experienceYears){
-        this.experienceYears;
+    public void setExperienceYears(int experienceYears){
+        if (experienceYears>=0){
+            this.experienceYears=experienceYears;
+        }else{
+            System.out.println("Experience years must be positive!");
+        }
     }
+
     public boolean isExperienced(){
         return experienceYears>10;
     }
     public boolean canPerformSurgery(){
-        return specialization="surgery";
+        return "surgery".equalsIgnoreCase(specialization);
     }
     public String toString(){
         return "Doctor{doctorid='"+doctorid+"', name="+name+", specialization='"+specialization+"', experienxeYears="+experienceYears+"}";
