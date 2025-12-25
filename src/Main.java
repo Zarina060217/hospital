@@ -32,7 +32,7 @@ public class Main{
         System.out.println("---Testing getters---");
         System.out.println("Patient 1 name:"+patient1.getFullname());
         System.out.println("Patient 3 bloodtype"+patient3.getBloodtype());
-        System.out.println("Doctor 3 specialization:"+doctor1.getSpecialization());
+        System.out.println("Doctor 3 specialization:"+doctor3.getSpecialization());
         System.out.println("Appointment 2 date:"+appointment2.getDate());
         System.out.println();
 
@@ -60,7 +60,7 @@ public class Main{
         System.out.println("___Testing appointment mathods___");
         appointment2.cancel();
         System.out.println("Appointment 2 after cancellation:"+ appointment2);
-        LocalDateTime newDate=LocalDateTime.of(2023,12,30,9,0);
+        LocalDateTime newDate=LocalDateTime.of(2025,12,30,9,0);
         appointment1.reschedule(newDate);
         System.out.println("appointment1 after reschedule"+ appointment1);
 
