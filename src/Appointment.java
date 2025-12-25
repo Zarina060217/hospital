@@ -35,7 +35,7 @@ public class Appointment {
         return status;
     }
 
-    public void setAppointmentID(String AppointmentID) {
+    public void setAppointmentID(String appointmentID) {
         this.appointmentID = appointmentID;
     }
 
