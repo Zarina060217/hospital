@@ -1,6 +1,12 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main{
+    private static ArrayList<Patient> patients=new ArrayList<>();
+    private static ArrayList<Doctor> doctors=new ArrayList<>();
+    private static ArrayList<Appointment> appointments=new ArrayList<>();
+    private static Scanner scanner=new Scanner(System.in);
     public static void main(String[] args){
         System.out.println("===Hospital Management System===");
         System.out.println();

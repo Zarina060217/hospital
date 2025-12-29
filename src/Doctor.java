@@ -15,10 +15,21 @@ public class Doctor {
     public int getExpeienceYears(){return experienceYears;}
 
     public void setDoctorid(String doctorid){
-        this.doctorid=doctorid;
+        if(doctorid !=null && doctorid.length()>=3){
+            boolean startsWithD=doctorid.startsWith("D");
+            String numericpart=doctorid.substring(1);
+            boolean restdigits=numericpart.chars().allMatch(c->c>=48 && c<=57);
+            if (startsWithD && restdigits){
+                this.doctorid=doctorid;
+            }
+        }System.out.println("Invalid doctorid: Must start with 'D' followed by digits(ex: D01)");
     }
     public void setName(String name){
-        this.name=name;
+        if(name!=null && !name.trim().isEmpty()){
+            this.name=name;
+        }else{
+            System.out.println("Name can't be empty");
+        }
     }
     public void setSpecialization(String specialization){
         this.specialization=specialization;
