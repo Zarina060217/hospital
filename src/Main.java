@@ -7,7 +7,72 @@ public class Main{
     private static ArrayList<Doctor> doctors=new ArrayList<>();
     private static ArrayList<Appointment> appointments=new ArrayList<>();
     private static Scanner scanner=new Scanner(System.in);
-    public static void main(String[] args){
+    private static void displayMenu(){
+        System.out.println("\n========================================");
+        System.out.println("  HOSPITAL MANAGEMENT SYSTEM");
+        System.out.println("========================================");
+        System.out.println("1. Add Patient");
+        System.out.println("2. View Patients");
+        System.out.println("3. Add Doctor");
+        System.out.println("4. View All Doctors");
+        System.out.println("5. Add Appointment");
+        System.out.println("6. View All Appointments");
+        System.out.println("0. Exit");
+        System.out.println("========================================");
+        System.out.print("Enter your choice: ");
+    }
+    private static void addPatient(){
+        System.out.println("\n---ADD PATIENTS---");
+        System.out.print("Enter IIN: ");
+        String IIN=scanner.nextLine();
+        System.out.print("Enter Full name: ");
+        String fullname=scanner.nextLine();
+        System.out.print("Enter age: ");
+        int age=scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter bloodtype: ");
+        Patient.Bloodtype bloodtype=scanner.nextBloodtype();
+
+    }
+    public static void main(String[] args) {
+        boolean run = true;
+        while (run) {
+            displayMenu();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    addPatient();
+                    break;
+                case 2:
+                    viewAllPatients();
+                    break;
+                case 3:
+                    addDoctor();
+                    break;
+                case 4:
+                    viewAllDoctors();
+                    break;
+                case 5:
+                    addAppointment();
+                    break;
+                case 6:
+                    viewAllAppointments();
+                    break;
+                case 0:
+                    System.out.println("\nGoodbye!");
+                    run = false;
+                    break;
+                default:
+                    System.out.println("\n Invalid choice");
+            }
+            if (run) {
+                System.out.println("\nPress Enter to continue...");
+                scanner.nextLine();
+            }
+        }scanner.close();
+
+
         System.out.println("===Hospital Management System===");
         System.out.println();
         Patient patient1=new Patient("060217789123","Dosymova Zhansaya",17,Patient.Bloodtype.AB);
@@ -19,6 +84,15 @@ public class Main{
         LocalDateTime date= LocalDateTime.of(2025,12,28,14,0);
         Appointment appointment1=new Appointment("A01",patient2.getFullname(),doctor3.getName(),date,"scheduled");
         Appointment appointment2=new Appointment("A02",patient3.getFullname(),doctor2.getName(),date,"scheduled");
+
+        patients.add(new Patient("060217789123","Dosymova Zhansaya",17,Patient.Bloodtype.AB));
+        patients.add(new Patient("091207589632","Beisen Bori",13,Patient.Bloodtype.O));
+        patients.add(new Patient("100511789583","Nazar Hadjar",13,Patient.Bloodtype.A));
+        doctors.add(new Doctor("D01","Beisen Zamira","therapist",30));
+        doctors.add(new Doctor("D02","Yesirkep Yelnaz","gynecologist",1));
+        doctors.add(new Doctor("D03","Shabden Adil","radiologist",13));
+        appointments.add(new Appointment("A01",patient2.getFullname(),doctor3.getName(),date,"scheduled"));
+        appointments.add(new Appointment("A02",patient3.getFullname(),doctor2.getName(),date,"scheduled"));
 
         System.out.println("---Patients---");
         System.out.println(patient1);
