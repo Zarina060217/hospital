@@ -12,7 +12,7 @@ public class Doctor {
     public String getDoctorid(){return doctorid;}
     public String getName(){return name;}
     public String getSpecialization(){return specialization;}
-    public int getExpeienceYears(){return experienceYears;}
+    public int getExperienceYears(){return experienceYears;}
 
     public void setDoctorid(String doctorid){
         if(doctorid !=null && doctorid.length()>=3){

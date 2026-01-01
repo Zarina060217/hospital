@@ -30,8 +30,73 @@ public class Main{
         System.out.print("Enter age: ");
         int age=scanner.nextInt();
         scanner.nextLine();
-        System.out.print("Enter bloodtype: ");
-        Patient.Bloodtype bloodtype=scanner.nextBloodtype();
+        System.out.print("Enter bloodtype(O,A,B,AB): ");
+        String bloodInput=scanner.nextLine().toUpperCase();
+        Patient.Bloodtype bloodtype=Patient.Bloodtype.valueOf(bloodInput);
+        Patient patient=new Patient(IIN, fullname, age, bloodtype);
+        patients.add(patient);
+        System.out.println("\nPatient added successfully");
+    }
+    private static void viewAllPatients(){
+        System.out.println("\\n========================================");
+        System.out.println("                ALL PATIENTS");
+        System.out.println("===========================================");
+        if (patients.isEmpty()){
+            System.out.println("No patients found.");
+            return;
+        }System.out.println("Total number of patients: "+patients.size());
+        System.out.println();
+        for(int i=0;i<patients.size();++i){
+            Patient patient=patients.get(i);
+            System.out.println((i+1)+". "+patient.getIIN());
+            System.out.println("; Fullname: "+patient.getFullname());
+            System.out.println("; Age: "+patient.getAge());
+            System.out.println("; Bloodtype: "+patient.getBloodtype());
+            if (patient.isMinor()){
+                System.out.println("Treatment is free");
+            }System.out.println();
+        }
+    }
+    private static void addDoctor(){
+        System.out.println("\n---ADD DOCTOR---");
+        System.out.print("Enter doctorid: ");
+        String doctorid=scanner.nextLine();
+        System.out.print("Enter doctor name: ");
+        String name=scanner.nextLine();
+        System.out.print("Enter a specilaization: ");
+        String specialization=scanner.nextLine();
+        System.out.print("Enter experience years: ");
+        int experienceYears=scanner.nextInt();
+        Doctor doctor=new Doctor(doctorid,name,specialization,experienceYears);
+        doctors.add(doctor);
+        System.out.println("\nDoctor added successfully");
+    }
+    private static void viewAllDoctors(){
+        System.out.println("\\n========================================");
+        System.out.println("                ALL PATIENTS");
+        System.out.println("===========================================");
+        if(doctors.isEmpty()){
+            System.out.println("No doctors found");
+            return;
+        }System.out.print("Total number of doctors "+doctors.size());
+        System.out.println();
+        for(int i=0;i<doctors.size();++i){
+            Doctor doctor=doctors.get(i);
+            System.out.println((i+1)+". "+doctor.getDoctorid());
+            System.out.println("; Name: "+doctor.getName());
+            System.out.println("; Specialization: "+doctor.getSpecialization());
+            System.out.println("; Experience years: "+doctor.getExperienceYears());
+            if(doctor.canPerformSurgery()){
+                System.out.println("High skill surger");
+            }System.out.println();
+        }
+    }
+    private static void addAppointment(){
+        System.out.println("\n---ADD APPOINTMENT---");
+        System.out.print("Enter appointmentid: ");
+        String.appointmentID=scanner.nextLine();
+        System.out.print("Enter patient name: ");
+        String.patientName=scanner.nextLine();
 
     }
     public static void main(String[] args) {
