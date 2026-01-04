@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main{
     private static ArrayList<Patient> patients=new ArrayList<>();
-    private static ArrayList<Doctor> doctors=new ArrayList<>();
+    private static ArrayList<medicalStaff> allStaff=new ArrayList<>();
     private static ArrayList<Appointment> appointments=new ArrayList<>();
     private static Scanner scanner=new Scanner(System.in);
 
@@ -14,21 +14,24 @@ public class Main{
         Patient patient1 = new Patient("060217789123", "Dosymova Zhansaya", 17, Patient.Bloodtype.AB);
         Patient patient2 = new Patient("091207589632", "Beisen Bori", 13, Patient.Bloodtype.O);
         Patient patient3 = new Patient("100511789583", "Nazar Hadjar", 13, Patient.Bloodtype.A);
-        Doctor doctor1 = new Doctor("D01", "Beisen Zamira", "therapist", 30);
-        Doctor doctor2 = new Doctor("D02", "Yesirkep Yelnaz", "gynecologist", 1);
-        Doctor doctor3 = new Doctor("D03", "Shabden Adil", "radiologist", 13);
+        patients.add(patient1);
+        patients.add(patient2);
+        patients.add(patient3);
+        allStaff.add(new Doctor("D01","Beisenova Zamira",550000,37,"theary"));
+        allStaff.add(new Doctor("D02","Yesirkep Yelnaz",450000,2,"gynecology"));
+        allStaff.add(new Nurse("N01","Turan Railya",300000,5,"day",true));
         LocalDateTime date = LocalDateTime.of(2025, 12, 28, 14, 0);
-        Appointment appointment1 = new Appointment("A01", patient2.getFullname(), doctor3.getName(), date, "scheduled");
-        Appointment appointment2 = new Appointment("A02", patient3.getFullname(), doctor2.getName(), date, "scheduled");
-
-        patients.add(new Patient("060217789123", "Dosymova Zhansaya", 17, Patient.Bloodtype.AB));
-        patients.add(new Patient("091207589632", "Beisen Bori", 13, Patient.Bloodtype.O));
-        patients.add(new Patient("100511789583", "Nazar Hadjar", 13, Patient.Bloodtype.A));
-        doctors.add(new Doctor("D01", "Beisen Zamira", "therapist", 30));
-        doctors.add(new Doctor("D02", "Yesirkep Yelnaz", "gynecologist", 1));
-        doctors.add(new Doctor("D03", "Shabden Adil", "radiologist", 13));
-        appointments.add(new Appointment("A01", patient2.getFullname(), doctor3.getName(), date, "scheduled"));
-        appointments.add(new Appointment("A02", patient3.getFullname(), doctor2.getName(), date, "scheduled"));
+        medicalStaff doc1=findStaffById("D01");
+        medicalStaff doc2=findStaffById("D02");
+        if (doc1!=null){
+            appointments.add(new Appointment("A01",patient2.getFullname(), doc1.getName(), date, "scheduled"));
+        }
+        if(doc2!=null){
+            appointments.add(new Appointment("A02", patient3.getFullname(),doc2.getName(), date, "scheduled"));
+        }
+        for (medicalStaff s : allStaff){
+            s.work();
+        }
         boolean run = true;
         while (run) {
             displayMenu();
@@ -117,38 +120,36 @@ public class Main{
             }System.out.println();
         }
     }
+    public static medicalStaff findStaffById(String id){
+        for(medicalStaff s: allStaff){
+            if(s.getStaffid()!=null && s.getStaffid().equalsIgnoreCase(id)){
+                return s;
+            }
+        }return null;
+    }
     private static void addDoctor(){
         System.out.println("\n---ADD DOCTOR---");
         System.out.print("Enter doctorid: ");
-        String doctorid=scanner.nextLine();
+        String staffid=scanner.nextLine();
         System.out.print("Enter doctor name: ");
         String name=scanner.nextLine();
         System.out.print("Enter a specilaization: ");
         String specialization=scanner.nextLine();
+        System.out.print("Enter a salary: ");
+        double salary=scanner.nextDouble();
         System.out.print("Enter experience years: ");
         int experienceYears=scanner.nextInt();
-        Doctor doctor=new Doctor(doctorid,name,specialization,experienceYears);
-        doctors.add(doctor);
+        allStaff.add(new Doctor(staffid,name, salary, experienceYears,specialization));
         System.out.println("\nDoctor added successfully");
     }
     private static void viewAllDoctors(){
         System.out.println("\\n========================================");
         System.out.println("                ALL DOCTORS");
         System.out.println("===========================================");
-        if(doctors.isEmpty()){
-            System.out.println("No doctors found");
-            return;
-        }System.out.print("Total number of doctors "+doctors.size());
-        System.out.println();
-        for(int i=0;i<doctors.size();++i){
-            Doctor doctor=doctors.get(i);
-            System.out.println((i+1)+". "+doctor.getDoctorid());
-            System.out.println("; Name: "+doctor.getName());
-            System.out.println("; Specialization: "+doctor.getSpecialization());
-            System.out.println("; Experience years: "+doctor.getExperienceYears());
-            if(doctor.canPerformSurgery()){
-                System.out.println("High skill surger");
-            }System.out.println();
+        for (medicalStaff s : allStaff){
+            if(s instanceof Doctor){
+                System.out.println(s.toString());
+            }
         }
     }
     private static void addAppointment(){

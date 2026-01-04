@@ -1,18 +1,14 @@
-public class Doctor {
-    private String doctorid;
-    private String name;
+public class Doctor extends medicalStaff{
     private String specialization;
-    private int experienceYears;
-    public Doctor(String doctorid, String name,String specialization, int experienceYears){
-        this.doctorid=doctorid;
-        this.name=name;
+    public Doctor(String staffid, String name,double salary,int experienceYears,String specialization){
+        super(staffid, name, salary, experienceYears);
         this.specialization=specialization;
-        this.experienceYears=experienceYears;
+
     }
-    public String getDoctorid(){return doctorid;}
-    public String getName(){return name;}
     public String getSpecialization(){return specialization;}
-    public int getExperienceYears(){return experienceYears;}
+    public void setSpecialization(String specialization){
+        this.specialization=specialization;
+    }
 
     public void setDoctorid(String doctorid){
         if(doctorid !=null && doctorid.length()>=3){
@@ -20,28 +16,17 @@ public class Doctor {
             String numericpart=doctorid.substring(1);
             boolean restdigits=numericpart.chars().allMatch(c->c>=48 && c<=57);
             if (startsWithD && restdigits){
-                this.doctorid=doctorid;
+                this.staffid=doctorid;
+                return;
             }
         }System.out.println("Invalid doctorid: Must start with 'D' followed by digits(ex: D01)");
     }
-    public void setName(String name){
-        if(name!=null && !name.trim().isEmpty()){
-            this.name=name;
-        }else{
-            System.out.println("Name can't be empty");
-        }
+    @Override
+    public void work(){
+        System.out.println("Doctor "+name+" is working "+specialization+ "department");
     }
-    public void setSpecialization(String specialization){
-        this.specialization=specialization;
-    }
-    public void setExperienceYears(int experienceYears){
-        if (experienceYears>=0){
-            this.experienceYears=experienceYears;
-        }else{
-            System.out.println("Experience years must be positive!");
-        }
-    }
-
+    @Override
+    public String getrole(){return "Doctor";}
     public boolean isExperienced(){
         return experienceYears>10;
     }
@@ -49,6 +34,6 @@ public class Doctor {
         return "surgery".equalsIgnoreCase(specialization);
     }
     public String toString(){
-        return "Doctor{doctorid='"+doctorid+"', name="+name+", specialization='"+specialization+"', experienxeYears="+experienceYears+"}";
+        return super.toString()+"| Specialization: "+specialization;
     }
 }
