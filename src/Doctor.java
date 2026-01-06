@@ -23,7 +23,7 @@ public class Doctor extends medicalStaff{
     }
     @Override
     public void work(){
-        System.out.println("Doctor "+name+" is working "+specialization+ "department");
+        System.out.println("Doctor "+name+" is working in "+specialization+ "department.");
     }
     @Override
     public String getrole(){return "Doctor";}
@@ -33,6 +33,7 @@ public class Doctor extends medicalStaff{
     public boolean canPerformSurgery(){
         return "surgery".equalsIgnoreCase(specialization);
     }
+    @Override
     public String toString(){
         return super.toString()+"| Specialization: "+specialization;
     }

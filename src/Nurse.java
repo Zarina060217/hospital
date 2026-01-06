@@ -29,7 +29,7 @@ public class Nurse extends medicalStaff{
         return bonus;
     }
     public double CountSalary(){
-        double baseSalary = 30*12000;
+        double baseSalary = 30*12000.0;
         this.salary=baseSalary+Countingbonus();
         return this.salary;
     }
@@ -39,7 +39,7 @@ public class Nurse extends medicalStaff{
     }
     @Override
     public void work(){
-        System.out.println(getrole()+name+" is healing patients");
+        System.out.println(getrole()+name+" takes care of the patients.");
     }
     @Override
     public String toString(){
