@@ -5,10 +5,10 @@ public class medicalStaff {
     protected int experienceYears;
 
     public medicalStaff(String staffid, String name, double salary, int experienceYears){
-        this.staffid=staffid;
-        this.name=name;
-        this.salary=salary;
-        this.experienceYears=experienceYears;
+        setStaffid(staffid);
+        setName(name);
+        setSalary(salary);
+        setExperienceYears(experienceYears);
     }
 
     public String getStaffid(){return staffid;}
@@ -25,7 +25,11 @@ public class medicalStaff {
         }
     }
     public void setSalary(double salary){
-        if(salary>=0) this.salary=salary;
+        if(salary>=0){
+            this.salary=salary;
+        }else{
+            System.out.println("Business rule:no negative salary!");
+        }
     }
     public void setExperienceYears(int experienceYears){
         if (experienceYears>=0){

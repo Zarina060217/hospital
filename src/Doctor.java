@@ -2,7 +2,7 @@ public class Doctor extends medicalStaff{
     private String specialization;
     public Doctor(String staffid, String name,double salary,int experienceYears,String specialization){
         super(staffid, name, salary, experienceYears);
-        this.specialization=specialization;
+        setSpecialization(specialization);
 
     }
     public String getSpecialization(){return specialization;}
