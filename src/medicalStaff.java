@@ -50,7 +50,6 @@ public class medicalStaff {
         else if(experienceYears>=10) salary*=1.35;
         return salary;
     }
-    @Override
     public String toString(){
         return "["+getrole()+"]"+name+"(Id: "+staffid +", Salary: "+salary+ "KZT, Experience: "+experienceYears +"years)";
     }

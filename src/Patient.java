@@ -4,10 +4,10 @@ public class Patient {
     private int age;
     private Bloodtype bloodtype ;
     public Patient(String IIN, String fullname,int age, Bloodtype bloodtype){
-        this.IIN=IIN;
-        this.fullname=fullname;
-        this.age=age;
-        this.bloodtype=bloodtype;
+        setIIN(IIN);
+        setFullname(fullname);
+        setAge(age);
+        setBloodtype(bloodtype);
     }
     public String getIIN(){
         return IIN;

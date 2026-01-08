@@ -8,11 +8,11 @@ public class Appointment {
     private String status = "Scheduled";
 
     public Appointment(String appointmentID, String patientName, String doctorName, LocalDateTime date, String status) {
-        this.appointmentID = appointmentID;
-        this.patientName = patientName;
-        this.doctorName = doctorName;
-        this.date = date;
-        this.status = status;
+        setAppointmentID(appointmentID);
+        setPatientName(patientName);
+        setDoctorName(doctorName);
+        setDate(date);
+        setStatus(status);
     }
     public String getAppointmentID(){return appointmentID;}
     public String getPatientName(){return patientName;}

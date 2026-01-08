@@ -27,6 +27,12 @@ public class Doctor extends medicalStaff{
     }
     @Override
     public String getrole(){return "Doctor";}
+    @Override
+    public double SalaryUp(){
+        super.SalaryUp();
+        System.out.println("Doctor salary due experience: "+salary);
+        return salary;
+    }
     public boolean isExperienced(){
         return experienceYears>10;
     }

@@ -132,9 +132,11 @@ public class Main{
         for(int i=0;i<patients.size();++i){
             Patient patient=patients.get(i);
             System.out.println((i+1)+". "+patient.getIIN());
-            System.out.println("; Fullname: "+patient.getFullname());
-            System.out.println("; Age: "+patient.getAge());
-            System.out.println("; Bloodtype: "+patient.getBloodtype());
+            System.out.println("Fullname: "+patient.getFullname());
+            System.out.println("Age: "+patient.getAge());
+            System.out.println("Bloodtype: "+patient.getBloodtype());
+            System.out.println(patient.getDonorCompatibility());
+            System.out.println(patient.getCategory());
             if (patient.isMinor()){
                 System.out.println("Treatment is free");
             }System.out.println();
@@ -180,7 +182,12 @@ public class Main{
                 if(doctor.isExperienced()){
                     System.out.println("Senior doctor");
                 }
+                double uppedSalary=doctor.SalaryUp();
+                System.out.println("Increased Salary: "+uppedSalary);
                 System.out.println();
+                if(doctor.canPerformSurgery()){
+                    System.out.println("Authorized to perform surgical procedures.");
+                }
             }
         }
         if(doccount==0){
@@ -225,6 +232,10 @@ public class Main{
                 if(nurse.isHeadNurse()){
                     System.out.println("Head nurse");
                 }
+                double shiftSalary=nurse.CountSalary();
+                System.out.println("Salary of nurse due shifts taken: "+shiftSalary);
+                double upSalary=nurse.SalaryUp();
+                System.out.println("Salary of nurse due experience: "+upSalary);
                 System.out.println();
             }
         }

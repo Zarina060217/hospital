@@ -3,11 +3,11 @@ public class Nurse extends medicalStaff{
     private boolean isHeadNurse;
     public Nurse(String staffid, String name, double salary,int experienceYears,String shiftType,boolean isHeadNurse){
         super(staffid, name, salary,experienceYears);
-        this.shiftType = shiftType;
-        this.isHeadNurse = isHeadNurse;
+        setShiftType(shiftType);
+        setHeadNurse(isHeadNurse);
     }
     public String getShiftType(){return shiftType;}
-    public void setShiftTypes(String shiftType){this.shiftType=shiftType;}
+    public void setShiftType(String shiftType){this.shiftType=shiftType;}
     public boolean isHeadNurse(){return isHeadNurse;}
     public void setHeadNurse(boolean headNurse){isHeadNurse=headNurse;}
     public void setNurseid(String nurseid){
@@ -40,6 +40,12 @@ public class Nurse extends medicalStaff{
     @Override
     public void work(){
         System.out.println(getrole()+name+" takes care of the patients.");
+    }
+    @Override
+    public double SalaryUp(){
+        super.SalaryUp();
+        System.out.println("Increased salary:"+salary);
+        return salary;
     }
     @Override
     public String toString(){
