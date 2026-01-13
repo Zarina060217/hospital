@@ -1,7 +1,11 @@
 public class Doctor extends medicalStaff{
     private String specialization;
+    private static int nextDid=1;
+    private static String generateDid(){
+        return String.format("D%02d", nextDid++);
+    }
     public Doctor(String staffid, String name,double salary,int experienceYears,String specialization){
-        super(staffid, name, salary, experienceYears);
+        super((staffid==null || staffid.trim().isEmpty())?generateDid():staffid,name,salary,experienceYears);
         setSpecialization(specialization);
 
     }
@@ -9,21 +13,21 @@ public class Doctor extends medicalStaff{
     public void setSpecialization(String specialization){
         this.specialization=specialization;
     }
-
-    public void setDoctorid(String doctorid){
-        if(doctorid !=null && doctorid.length()>=3){
-            boolean startsWithD=doctorid.startsWith("D");
-            String numericpart=doctorid.substring(1);
+    @Override
+    public void setStaffid(String staffid){
+        if(staffid !=null && staffid.length()>=3){
+            boolean startsWithD=staffid.startsWith("D");
+            String numericpart=staffid.substring(1);
             boolean restdigits=numericpart.chars().allMatch(c->c>=48 && c<=57);
             if (startsWithD && restdigits){
-                this.staffid=doctorid;
+                this.staffid=staffid;
                 return;
             }
         }System.out.println("Invalid doctorid: Must start with 'D' followed by digits(ex: D01)");
     }
     @Override
     public void work(){
-        System.out.println("Doctor "+name+" is working in "+specialization+ "department.");
+        System.out.println("Doctor "+name+" is working in "+specialization+ " department.");
     }
     @Override
     public String getrole(){return "Doctor";}
