@@ -1,30 +1,21 @@
-public class Nurse extends medicalStaff{
+package model;
+public class Nurse extends medicalStaff implements WageUp{
     private String shiftType;
     private boolean isHeadNurse;
-    private static int nextNid=1;
-    private static String generateNid(){
-        return String.format("N%02d",nextNid++);
-    }
     public Nurse(String staffid, String name, double salary,int experienceYears,String shiftType,boolean isHeadNurse){
-        super((staffid==null || staffid.trim().isEmpty())?generateNid():staffid, name, salary,experienceYears);
+        super(staffid, name, salary,experienceYears);
         setShiftType(shiftType);
         setHeadNurse(isHeadNurse);
     }
     public String getShiftType(){return shiftType;}
-    public void setShiftType(String shiftType){this.shiftType=shiftType;}
+    public void setShiftType(String shiftType){
+        if(shiftType==null ||shiftType.trim().isEmpty()){
+            throw new IllegalArgumentException("Shiftype can't be empty");
+        }
+    }
     public boolean isHeadNurse(){return isHeadNurse;}
     public void setHeadNurse(boolean headNurse){isHeadNurse=headNurse;}
-    public void setStaffid(String staffid){
-        if(staffid!=null && staffid.length()>=3){
-          boolean startsWithN=staffid.startsWith("N");
-          String numericpart=staffid.substring(1);
-          boolean restdigits=numericpart.chars().allMatch(c->c>=48 && c<=57);
-          if(startsWithN && restdigits){
-              this.staffid=staffid;
-              return;
-          }
-        }System.out.println("Invalid nurse id: Must start with 'N' followed by digits(ex:N01)");
-    }
+    @Override
     public double Countingbonus(){
         double bonus=0;
         if (isHeadNurse) bonus+=20000.0;
@@ -32,6 +23,7 @@ public class Nurse extends medicalStaff{
         if ("holiday".equalsIgnoreCase(shiftType)) bonus+=25000.0;
         return bonus;
     }
+    @Override
     public double CountSalary(){
         double baseSalary = 30*12000.0;
         this.salary=baseSalary+Countingbonus();

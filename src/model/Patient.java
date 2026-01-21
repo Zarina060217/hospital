@@ -1,3 +1,4 @@
+package model;
 public class Patient {
     private String IIN;
     private String fullname;
@@ -23,32 +24,24 @@ public class Patient {
     }
 
     public void setIIN(String IIN){
-        if(IIN.length()==12 && IIN.chars().allMatch(c ->c>=48 && c<=57)){
-            this.IIN=IIN;
-        }else{
-            System.out.println("invalid IIN, it must contain 12 digits");
-        }
+        if(IIN.length()!=12 && !IIN.chars().allMatch(c ->c>=48 && c<=57)){
+           throw new IllegalArgumentException("invalid IIN, it must contain 12 digits");
+        }this.IIN=IIN;
     }
     public void setFullname(String fullname){
-        if(fullname!=null && !fullname.trim().isEmpty()){
-            this.fullname=fullname;
-        }else{
-            System.out.println("Name can't be empty!");
-        }
+        if(fullname==null || fullname.trim().isEmpty()){
+            throw new IllegalArgumentException("Name can't be empty!");
+        }this.fullname=fullname;
     }
     public void setAge(int age){
-        if(age>=0 && age<=150){
-            this.age=age;
-        }else{
-            System.out.println("Invalid age");
-        }
+        if(age<0 || age>150){
+            throw new IllegalArgumentException("Invalid age");
+        }this.age=age;
     }
     public void setBloodtype(Bloodtype bloodtype){
-        if(bloodtype!=null){
-            this.bloodtype=bloodtype;
-        }else{
-            System.out.println("Bloodtype can't be null");
-        }
+        if(bloodtype==null){
+            throw new IllegalArgumentException("Bloodtype can't be null");
+        }this.bloodtype=bloodtype;
     }
 
     public boolean isMinor(){
