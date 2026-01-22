@@ -23,7 +23,7 @@ public class Appointment {
     public void setAppointmentID(String appointmentID) {
         if (appointmentID == null || appointmentID.trim().isEmpty()) {
             throw new IllegalArgumentException("Appointment id can't be null");
-        }
+        }this.appointmentID=appointmentID;
     }
         public void setPatientName(String patientName) {
             if(patientName==null || patientName.trim().isEmpty()){

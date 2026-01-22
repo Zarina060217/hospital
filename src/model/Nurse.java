@@ -11,7 +11,7 @@ public class Nurse extends medicalStaff implements WageUp{
     public void setShiftType(String shiftType){
         if(shiftType==null ||shiftType.trim().isEmpty()){
             throw new IllegalArgumentException("Shiftype can't be empty");
-        }
+        }this.shiftType=shiftType;
     }
     public boolean isHeadNurse(){return isHeadNurse;}
     public void setHeadNurse(boolean headNurse){isHeadNurse=headNurse;}

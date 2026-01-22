@@ -20,7 +20,7 @@ public abstract class medicalStaff {
     public void setStaffid(String staffid){
         if(staffid==null || staffid.trim().isEmpty()){
             throw new IllegalArgumentException("Staffid can't be null");
-        }
+        }this.staffid=staffid;
     }
     public void setName(String name){
         if(name==null || name.trim().isEmpty()){

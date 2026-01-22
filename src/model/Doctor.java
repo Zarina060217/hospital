@@ -9,7 +9,7 @@ public class Doctor extends medicalStaff{
     public void setSpecialization(String specialization){
         if(specialization==null||specialization.trim().isEmpty()){
             throw new IllegalArgumentException("Specialization can't be null");
-        }
+        }this.specialization=specialization;
     }
     @Override
     public void work(){
