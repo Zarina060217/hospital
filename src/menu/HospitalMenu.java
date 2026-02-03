@@ -1,40 +1,27 @@
 package menu;
 import model.*;
+import database.StaffDAO;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class HospitalMenu implements Menu{
     private ArrayList<medicalStaff> allStaff;
-    private ArrayList<Patient> patients;
     private ArrayList<Appointment> appointments;
     private Scanner scanner;
+    private StaffDAO staffDAO;
     public HospitalMenu(){
         this.allStaff=new ArrayList<>();
         this.scanner=new Scanner(System.in);
-        this.patients=new ArrayList<>();
-        this.scanner=new Scanner(System.in);
         this.appointments=new ArrayList<>();
         this.scanner=new Scanner(System.in);
+        this.staffDAO=new StaffDAO();
         System.out.println("===Hospital Management System===");
-        Patient patient1 = new Patient("060217789123", "Dosymova Zhansaya", 17, Patient.Bloodtype.AB);
-        Patient patient2 = new Patient("091207589632", "Beisen Bori", 13, Patient.Bloodtype.O);
-        Patient patient3 = new Patient("100511789583", "Nazar Hadjar", 13, Patient.Bloodtype.A);
-        patients.add(patient1);
-        patients.add(patient2);
-        patients.add(patient3);
+
         allStaff.add(new Doctor("D01","Zamira Beisenova",700000.0,35,"Therapy"));
         allStaff.add(new Doctor("D02","Yesirkep Yelnaz",450000,2,"gynecology"));
         allStaff.add(new Nurse("N01","Turan Railya",300000,5,"day",true));
         LocalDateTime date = LocalDateTime.of(2026, 3, 14, 11, 35);
-        medicalStaff doc1=findStaffById("D01");
-        medicalStaff doc2=findStaffById("D02");
-        if (doc1!=null){
-            appointments.add(new Appointment("A01",patient2.getFullname(), doc1.getName(), date, "scheduled"));
-        }
-        if(doc2!=null){
-            appointments.add(new Appointment("A02", patient3.getFullname(),doc2.getName(), date, "scheduled"));
-        }
         for (medicalStaff s : allStaff){
             s.work();
         }
@@ -44,21 +31,26 @@ public class HospitalMenu implements Menu{
         System.out.println("\n========================================");
         System.out.println("  HOSPITAL MANAGEMENT SYSTEM");
         System.out.println("========================================");
+        System.out.println("Hospital management");
         System.out.println("1. Add Patient");
         System.out.println("2. View Patients");
-        System.out.println("3. Add Staff member");
-        System.out.println("4. Add doctor");
-        System.out.println("5. Add nurse");
-        System.out.println("6. View All Staff (Polymorphic)");
-        System.out.println("7. View All Staff Work(Polymorphism demo)");
-        System.out.println("8. View Doctors only");
-        System.out.println("9. View Nurses only");
-        System.out.println("10.Add Appointment");
-        System.out.println("11.View Appointments");
+        System.out.println("3. Add doctor");
+        System.out.println("4. Add nurse");
+        System.out.println("5. View All Staff (Polymorphic)");
+        System.out.println("6. View All Staff Work(Polymorphism demo)");
+        System.out.println("7. View Doctors only");
+        System.out.println("8. View Nurses only");
+        System.out.println("9.Add Appointment");
+        System.out.println("10.View Appointments");
+        System.out.println("11.Update Patient");
+        System.out.println("12.Delete Patient");
+        System.out.println("SEARCH & FILTER");
+        System.out.println("13. Search by full name");
+        System.out.println("14. Search by age range");
+        System.out.println("15. Search by bloodtype");
         System.out.println("0. Exit");
         System.out.println("========================================");
     }
-
     @Override
     public void run() {
         boolean running = true;
@@ -78,7 +70,12 @@ public class HospitalMenu implements Menu{
                     case 7: viewDoctors(); break;
                     case 8: viewNurses(); break;
                     case 9: addAppointment(); break;
-                    case 10: viewAppointments(); break;
+                    case 10:viewAppointments(); break;
+                    case 11:updatePatient();break;
+                    case 12:deletePatient();break;
+                    case 13:searchByFullname();break;
+                    case 14:searchByAgeRange();break;
+                    case 15:searchByBloodtype();break;
                     case 0:
                         System.out.println("\nGoodbye!");
                         running = false;
@@ -100,50 +97,94 @@ public class HospitalMenu implements Menu{
         System.out.println("\n---ADD PATIENTS---");
         try{
             System.out.print("Enter IIN: ");
-            String IIN=scanner.nextLine();
+            String iin=scanner.nextLine();
             System.out.print("Enter Full name: ");
             String fullname=scanner.nextLine();
             System.out.print("Enter age: ");
             int age=scanner.nextInt();
             scanner.nextLine();
             System.out.print("Enter bloodtype(O,A,B,AB): ");
-            String bloodInput=scanner.nextLine().toUpperCase();
-            Patient.Bloodtype bloodtype=Patient.Bloodtype.valueOf(bloodInput);
-            Patient patient=new Patient(IIN, fullname, age, bloodtype);
-            patients.add(patient);
+            String bloodtype=scanner.nextLine();
+            Patient patient=new Patient(iin, fullname, age, bloodtype);
+            staffDAO.insertPatient(patient);
             System.out.println("\nPatient added successfully");
-        }catch (IllegalArgumentException e){
-            System.out.println("Error: "+e.getMessage());
+        }catch (java.util.InputMismatchException e){
+            System.out.println("Invalid input type");
+            scanner.nextLine();
+        }catch(IllegalArgumentException e){
+            System.out.println("Validation error: "+e.getMessage());
         }
     }
     private void viewPatients(){
-        System.out.println("\\n========================================");
-        System.out.println("                ALL PATIENTS");
-        System.out.println("===========================================");
-        if (patients.isEmpty()){
-            System.out.println("No patients found.");
+        staffDAO.getAllPatient();
+    }
+    private void updatePatient(){
+        System.out.print("Enter IIN to update: ");
+        String iin=scanner.nextLine();
+        Patient epatient=staffDAO.getPatientByIin(iin);
+        if (epatient==null){
+            System.out.println("no patient found with iin:"+iin);
             return;
-        }System.out.println("Total number of patients: "+patients.size());
-        System.out.println();
-        for(int i=0;i<patients.size();++i){
-            Patient patient=patients.get(i);
-            System.out.println((i+1)+". "+patient.getIIN());
-            System.out.println("Fullname: "+patient.getFullname());
-            System.out.println("Age: "+patient.getAge());
-            System.out.println("Bloodtype: "+patient.getBloodtype());
-            System.out.println(patient.getDonorCompatibility());
-            System.out.println(patient.getCategory());
-            if (patient.isMinor()){
-                System.out.println("Treatment is free");
-            }System.out.println();
+        }System.out.println("current info:");
+        System.out.println(epatient.toString());
+        System.out.println("New name ["+epatient.getFullname()+"]: ");
+        String newName=scanner.nextLine();
+        if(newName.trim().isEmpty()){
+            newName=epatient.getFullname();
+        }
+        System.out.println("New age["+epatient+"]: ");
+        String ageInput=scanner.nextLine();
+        int newAge=ageInput.trim().isEmpty()?epatient.getAge():Integer.parseInt(ageInput);
+        System.out.println("New bloodtype["+epatient.getBloodtype()+"]: ");
+        String newBlood=scanner.nextLine();
+        if(newBlood.trim().isEmpty()){
+            newBlood=epatient.getBloodtype();
+        }
+        Patient upatient=new Patient(iin,newName,newAge,newBlood);
+        staffDAO.updatePatient(upatient);
+    }
+    private void deletePatient(){
+        System.out.print("Enter IIN to delete");
+        String iin=scanner.nextLine();
+        Patient patient=staffDAO.getPatientByIin(iin);
+        if(patient==null){
+            System.out.println("no patient found with iin:"+iin);
+            return;
+        }System.out.println("Patient to delete:"+patient);
+        System.out.println("Are you sure?(yes/no):");
+        String confirm=scanner.nextLine();
+        if(confirm.equalsIgnoreCase("yes")){
+            if(staffDAO.deletePatient(iin)){
+                System.out.println("patient deleted");
+            }else{
+                System.out.println("fail of deletion");
+            }
+        }else{
+            System.out.println("deletion cancelled");
         }
     }
-    public medicalStaff findStaffById(String id){
-        for(medicalStaff s: allStaff){
-            if(s.getStaffid()!=null && s.getStaffid().equalsIgnoreCase(id)){
-                return s;
-            }
-        }return null;
+    private void searchByFullname(){
+        System.out.print("Enter full name: ");
+        String fullname=scanner.nextLine();
+        for(Patient patient:staffDAO.searchByFullname(fullname)){
+            System.out.print(patient);
+        }
+    }
+    private void searchByAgeRange(){
+        System.out.print("Enter min age: ");
+        int min=Integer.parseInt(scanner.nextLine());
+        System.out.print("Enter max age: ");
+        int max=Integer.parseInt(scanner.nextLine());
+        for(Patient patient:staffDAO.searchByAgeRange(min,max)){
+            System.out.print(patient);
+        }
+    }
+    private void searchByBloodtype(){
+        System.out.print("Enter bloodtype: ");
+        String bloodtype=scanner.nextLine();
+        for(Patient patient:staffDAO.searchByBloodtype(bloodtype)){
+            System.out.print(patient);
+        }
     }
     private void addDoctor(){
         try{
@@ -166,7 +207,8 @@ public class HospitalMenu implements Menu{
         }catch (IllegalArgumentException e){
             System.out.println("Error: "+e.getMessage());
         }
-    }private void viewDoctors(){
+    }
+    private void viewDoctors(){
         System.out.println("\\n========================================");
         System.out.println("                ALL DOCTORS");
         System.out.println("===========================================");

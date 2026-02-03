@@ -1,17 +1,17 @@
 package model;
 public class Patient {
-    private String IIN;
+    private String iin;
     private String fullname;
     private int age;
-    private Bloodtype bloodtype ;
-    public Patient(String IIN, String fullname,int age, Bloodtype bloodtype){
-        setIIN(IIN);
+    private String bloodtype ;
+    public Patient(String iin, String fullname,int age, String bloodtype){
+        setIin(iin);
         setFullname(fullname);
         setAge(age);
         setBloodtype(bloodtype);
     }
-    public String getIIN(){
-        return IIN;
+    public String getIin(){
+        return iin;
     }
     public String getFullname(){
         return fullname;
@@ -19,14 +19,14 @@ public class Patient {
     public int getAge(){
         return age;
     }
-    public Bloodtype getBloodtype(){
+    public String getBloodtype(){
         return bloodtype;
     }
 
-    public void setIIN(String IIN){
-        if(IIN.length()!=12 && !IIN.chars().allMatch(c ->c>=48 && c<=57)){
+    public void setIin(String iin){
+        if(iin.length()!=12 && !iin.chars().allMatch(c ->c>=48 && c<=57)){
            throw new IllegalArgumentException("invalid IIN, it must contain 12 digits");
-        }this.IIN=IIN;
+        }this.iin=iin;
     }
     public void setFullname(String fullname){
         if(fullname==null || fullname.trim().isEmpty()){
@@ -38,7 +38,7 @@ public class Patient {
             throw new IllegalArgumentException("Invalid age");
         }this.age=age;
     }
-    public void setBloodtype(Bloodtype bloodtype){
+    public void setBloodtype(String bloodtype){
         if(bloodtype==null){
             throw new IllegalArgumentException("Bloodtype can't be null");
         }this.bloodtype=bloodtype;
@@ -52,19 +52,17 @@ public class Patient {
         if (age>63) return "Retired";
         else return "Adult";
     }
-    public enum Bloodtype {
-        O, A, B, AB
-    }
+
     public String getDonorCompatibility() {
         switch (this.bloodtype) {
-            case O -> { return fullname + " is a universal donor"; }
-            case A -> { return fullname + " is a donor for A and AB"; }
-            case B -> { return fullname + " is a donor for B and AB"; }
-            case AB -> { return fullname + " is a universal recipient"; }
+            case "O" -> { return fullname + " is a universal donor"; }
+            case "A"-> { return fullname + " is a donor for A and AB"; }
+            case "B" -> { return fullname + " is a donor for B and AB"; }
+            case "AB" -> { return fullname + " is a universal recipient"; }
             default -> { return "Unknown blood type"; }
         }
     }
     public String toString(){
-        return "Patient{IIN='"+IIN+"', fullname="+fullname+", age='"+age+"',bloodttype="+bloodtype+"}";
+        return "Patient{IIN='"+iin+"', fullname="+fullname+", age='"+age+"',bloodttype="+bloodtype+"}";
     }
 }
